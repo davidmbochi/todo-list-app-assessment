@@ -1,12 +1,11 @@
 package com.javawhizz.api.TodoListApi.task;
 
-import lombok.Builder;
 import lombok.Data;
 
 import java.time.LocalDate;
 
 @Data
-public class TaskDTO {
+public class UpdateTaskDTO {
     private String title;
     private String description;
     private LocalDate dueDate;

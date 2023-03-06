@@ -4,11 +4,11 @@ import java.util.List;
 import java.util.Optional;
 
 public interface TaskService {
-    Long createService(TaskDTO taskDTO);
+    Long createService(CreateTaskDTO createTaskDTO);
 
     Optional<Task> findTaskById(Long taskId);
 
-    Task updateTask(Long taskId, TaskDTO taskDTO);
+    Task updateTask(Long taskId, UpdateTaskDTO updateTaskDTO);
 
     void deleteTask(Long taskId);
 

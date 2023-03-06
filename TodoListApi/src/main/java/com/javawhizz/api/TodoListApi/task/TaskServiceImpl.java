@@ -11,12 +11,12 @@ public class TaskServiceImpl implements TaskService{
     private final TaskRepository taskRepository;
 
     @Override
-    public Long createService(TaskDTO taskDTO) {
+    public Long createService(CreateTaskDTO createTaskDTO) {
         Task task = Task.builder()
-                .title(taskDTO.getTitle())
-                .description(taskDTO.getDescription())
-                .dueDate(taskDTO.getDueDate())
-                .status(taskDTO.getStatus())
+                .title(createTaskDTO.getTitle())
+                .description(createTaskDTO.getDescription())
+                .dueDate(createTaskDTO.getDueDate())
+                .status(TaskStatus.PENDING)
                 .build();
         if (taskRepository.findTaskByTitle(task.getTitle()).isPresent()){
             throw new RuntimeException(String.format("task with title %s is present", task.getTitle()));
@@ -30,13 +30,13 @@ public class TaskServiceImpl implements TaskService{
     }
 
     @Override
-    public Task updateTask(Long taskId, TaskDTO taskDTO) {
+    public Task updateTask(Long taskId, UpdateTaskDTO updateTaskDTO) {
         return taskRepository.findById(taskId)
                 .map(theTask -> {
-                    theTask.setTitle(taskDTO.getTitle());
-                    theTask.setDescription(taskDTO.getDescription());
-                    theTask.setDueDate(taskDTO.getDueDate());
-                    theTask.setStatus(taskDTO.getStatus());
+                    theTask.setTitle(updateTaskDTO.getTitle());
+                    theTask.setDescription(updateTaskDTO.getDescription());
+                    theTask.setDueDate(updateTaskDTO.getDueDate());
+                    theTask.setStatus(updateTaskDTO.getStatus());
                     return taskRepository.save(theTask);
                 }).orElseThrow(()-> new RuntimeException(
                         String.format("The customer with id %s does not exist", taskId)));

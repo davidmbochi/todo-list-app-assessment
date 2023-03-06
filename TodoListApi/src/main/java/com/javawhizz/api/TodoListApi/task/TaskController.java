@@ -14,8 +14,8 @@ import java.util.List;
 public class TaskController {
     private final TaskService taskService;
     @PostMapping
-    ResponseEntity<Long> createTask(@RequestBody TaskDTO taskDTO){
-               Long taskId = taskService.createService(taskDTO);
+    ResponseEntity<Long> createTask(@RequestBody CreateTaskDTO createTaskDTO){
+               Long taskId = taskService.createService(createTaskDTO);
         return new ResponseEntity<>(taskId, HttpStatus.CREATED);
     }
 
@@ -36,9 +36,9 @@ public class TaskController {
 
     @PutMapping("{id}")
     ResponseEntity<Task> updateTask(@PathVariable("id") Long taskId,
-                                    @RequestBody TaskDTO taskDTO){
+                                    @RequestBody UpdateTaskDTO updateTaskDTO){
 
-        Task theTask = taskService.updateTask(taskId, taskDTO);
+        Task theTask = taskService.updateTask(taskId, updateTaskDTO);
         return new ResponseEntity<>(theTask, HttpStatus.OK);
     }
 
