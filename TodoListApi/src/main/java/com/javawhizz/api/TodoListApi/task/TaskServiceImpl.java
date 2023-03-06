@@ -31,15 +31,16 @@ public class TaskServiceImpl implements TaskService{
 
     @Override
     public Task updateTask(Long taskId, TaskDTO taskDTO) {
-        Task theTask = taskRepository.findById(taskId)
-                .stream()
-                .findFirst()
-                .orElseThrow(() -> new RuntimeException(String.format("task with id %s does not exist", taskId)));
-        theTask.setTitle(taskDTO.getTitle());
-        theTask.setDescription(taskDTO.getDescription());
-        theTask.setStatus(taskDTO.getStatus());
-        theTask.setDueDate(taskDTO.getDueDate());
-        return taskRepository.save(theTask);
+        return taskRepository.findById(taskId)
+                .map(theTask -> {
+                    theTask.setTitle(taskDTO.getTitle());
+                    theTask.setDescription(taskDTO.getDescription());
+                    theTask.setDueDate(taskDTO.getDueDate());
+                    theTask.setStatus(taskDTO.getStatus());
+                    return taskRepository.save(theTask);
+                }).orElseThrow(()-> new RuntimeException(
+                        String.format("The customer with id %s does not exist", taskId)));
+
     }
 
     @Override
